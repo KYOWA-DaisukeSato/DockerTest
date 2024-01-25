@@ -25,14 +25,14 @@ jobs:
         name: Build and test
         uses: docker/build-push-action@v5
         with:
-          context: .
+          #context: .
           target: test
           load: true
       -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          #context: .
           push: true
           target: prod
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
