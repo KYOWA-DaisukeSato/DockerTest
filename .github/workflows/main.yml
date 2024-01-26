@@ -29,10 +29,17 @@ jobs:
           target: test
           load: true
       -
+        name: Sanitize repo name
+        uses: actions/github-script@v6
+        id: sanitize_repo_name
+        with:
+          result-encoding: string
+          script: return '${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}'.toLowerCase()
+      -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
           #context: .
           push: true
           target: prod
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+          tags: ${{ steps.sanitize_repo_name.outputs.result }}:latest
